@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      target: build_development
+    volumes:
+      - ./:/srv/app:rw,cached
+      - ${SSH_KEY:-~/.ssh/id_rsa}:/root/.ssh/id_rsa
+
+  nginx:
+    build:
+      context: .
+      target: nginx
+    depends_on:
+      - app
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./public:/srv/app/public:ro
+    ports:
+      - '8080:80'

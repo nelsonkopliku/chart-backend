@@ -1,0 +1,13 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Acme\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Acme\Presentation\Rest\Action\:
+        resource: '../src/Presentation/Rest/Action'
+        tags: ['controller.service_arguments']
